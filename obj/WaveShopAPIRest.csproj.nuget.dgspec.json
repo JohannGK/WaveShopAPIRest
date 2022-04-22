@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\johan\\Desktop\\UV\\Repo\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {}
+    "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\johan\\Desktop\\UV\\Repo\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {
+    "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\johan\\Desktop\\UV\\Repo\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
+        "projectUniqueName": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
         "projectName": "WaveShopAPIRest",
-        "projectPath": "C:\\Users\\johan\\Desktop\\UV\\Repo\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
-        "packagesPath": "C:\\Users\\johan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\johan\\Desktop\\UV\\Repo\\WaveShopAPIRest\\obj\\",
+        "projectPath": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
+        "packagesPath": "C:\\Users\\josue\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\johan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\josue\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,22 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
@@ -63,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.104\\RuntimeIdentifierGraph.json"
         }
       }
     }
