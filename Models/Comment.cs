@@ -16,5 +16,7 @@ namespace WaveShopAPIRest.Models
         public DateTime Published { get; set; }
         public int? IdProduct { get; set; }
         public int? IdComment { get; set; }
+
+        public virtual Product? IdProductNavigation { get; set; }
     }
 }

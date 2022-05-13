@@ -24,9 +24,8 @@ CREATE TABLE [ShoppingCart] (
     [productsQuantity] INT NOT NULL, -- Auto generated
 	[subtotal] FLOAT NOT NULL, -- Auto generated
 	[LastUpdate] DATETIME NOT NULL, -- Auto generated
-	[IdUser] INT NOT NULL, 
-	CONSTRAINT [PK_dbo.ShoppingCart] PRIMARY KEY CLUSTERED ([id] ASC),
-	CONSTRAINT [PK_dbo.ShoppingCart.Account] FOREIGN KEY ([IdUser]) REFERENCES [dbo].[User] ([Id]) ON UPDATE CASCADE
+	[IdUser] INT, 
+	CONSTRAINT [PK_dbo.ShoppingCart] PRIMARY KEY CLUSTERED ([id] ASC)
 );
 
 CREATE TABLE [Address] (
@@ -118,7 +117,8 @@ CREATE TABLE [Comment] (
     [Published] DATETIME NOT NULL,
 	[IdProduct] INT,
 	[IdComment] INT, 
-	CONSTRAINT [PK_dbo.Opinion] PRIMARY KEY CLUSTERED ([id] ASC)
+	CONSTRAINT [PK_dbo.Opinion] PRIMARY KEY CLUSTERED ([id] ASC),
+	CONSTRAINT [FK_dbo.Comment.Product] FOREIGN KEY ([IdProduct]) REFERENCES [dbo].[Product] ([Id]) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE [Favorite] (

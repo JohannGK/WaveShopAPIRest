@@ -13,79 +13,90 @@ public class UsersController : ControllerBase
         DbContext = dbContext;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<List<User>>> GetUsers()
+    [HttpGet()]
+    public List<User> GetUsers()
     {
-        return DbContext.Users.OrderBy(u => u.UserName).ToList();
+        return DbContext.Users.ToList();
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUserAsync(int id)
+    [HttpGet("{userName}")]
+    public User? GetUser(string userName)
     {
-        var result = await DbContext.Users.FindAsync(id);
-        return result == null ? NotFound() : result;
+        return DbContext.Users.FirstOrDefault(u => u.UserName == userName);
     }
 
     [HttpPost]
     public async Task<ActionResult<User>> CreateUserAsync(User user)
     {
-        User newUser;
-        try
+        using (var transaction = DbContext.Database.BeginTransaction())
         {
-            CheckUserNameUnique(user.UserName, string.Empty);
-            CheckEmailUnique(user.Email, string.Empty);
-            await DbContext.Users.AddAsync(newUser = new Models.User()
+            User newUser;
+            try
             {
-                Email = user.Email,
-                UserName = user.UserName,
-                Password = user.Password,
-                Phone = user.Phone,
-                Description = user.Description,
-                Status = "Offline",
-                BirthDay = user.BirthDay,
-                Age = user.Age,
-                UerType = user.UerType,
-                Reputation = user.Reputation,
-                LastLogin = DateTime.Now,
-                LastUpdate = DateTime.Now
-            });
-            var result = await DbContext.SaveChangesAsync();
-            return newUser;
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
+                CheckUserNameUnique(user.UserName, string.Empty);
+                CheckEmailUnique(user.Email, string.Empty);
+                await DbContext.Users.AddAsync(newUser = new Models.User()
+                {
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    Phone = user.Phone,
+                    Description = user.Description,
+                    Status = "Offline",
+                    BirthDay = user.BirthDay,
+                    Age = user.Age,
+                    UerType = user.UerType,
+                    Reputation = user.Reputation,
+                    LastLogin = DateTime.Now,
+                    LastUpdate = DateTime.Now
+                });
+                await DbContext.SaveChangesAsync();
+                await DbContext.ShoppingCarts.AddAsync(new ShoppingCart() { productsQuantity = 0, subtotal = 0, LastUpdate = DateTime.Now, IdUser = newUser.Id });
+                await DbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return newUser;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return BadRequest(ex.Message);
+            }
         }
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<User>> UpdateTodoItem(int id, User newUser)
+    public async Task<ActionResult<User>> UpdateUserAsync(int id, User newUser)
     {
         if (DbContext.Users.Any(u => u.Id == id))
         {
-            try
+            using (var transaction = DbContext.Database.BeginTransaction())
             {
-                var result = await DbContext.Users.FindAsync(id);
-                CheckUserNameUnique(newUser.UserName, result.UserName);
-                CheckEmailUnique(newUser.Email, result.Email);
-                result.Email = newUser.Email;
-                result.UserName = newUser.UserName;
-                result.Password = newUser.Password;
-                result.Phone = newUser.Phone;
-                result.Description = newUser.Description;
-                result.Status = newUser.Status;
-                result.BirthDay = newUser.BirthDay;
-                result.Age = newUser.Age;
-                result.UerType = newUser.UerType;
-                result.Reputation = newUser.Reputation;
-                result.LastLogin = DateTime.Now;
-                result.LastUpdate = DateTime.Now;
-                var resultQuery = await DbContext.SaveChangesAsync();
-                return resultQuery >= 0 ? result : BadRequest();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                try
+                {
+                    var result = await DbContext.Users.FindAsync(id);
+                    CheckUserNameUnique(newUser.UserName, result.UserName);
+                    CheckEmailUnique(newUser.Email, result.Email);
+                    result.Email = newUser.Email;
+                    result.UserName = newUser.UserName;
+                    result.Password = newUser.Password;
+                    result.Phone = newUser.Phone;
+                    result.Description = newUser.Description;
+                    result.Status = newUser.Status;
+                    result.BirthDay = newUser.BirthDay;
+                    result.Age = newUser.Age;
+                    result.UerType = newUser.UerType;
+                    result.Reputation = newUser.Reputation;
+                    result.LastLogin = DateTime.Now;
+                    result.LastUpdate = DateTime.Now;
+                    await DbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest(ex.Message);
+                }
             }
         }
         else
@@ -94,35 +105,17 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteTodoItem(int id)
-    {
-        try
-        {
-            var result = await DbContext.Users.FindAsync(id);
-            if (result == null)
-                return NotFound();
-            result.Status = "Banned";
-            await DbContext.SaveChangesAsync();
-            return NoContent();
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
-    }
-
     private void CheckUserNameUnique(string userName, string currentUserName)
     {
         if (userName != currentUserName)
-            if (DbContext.Users.Any(u => u.UserName == userName))
+            if (DbContext.Users.Any(u => u.UserName.ToLower() == userName.ToLower()))
                 throw new Exception("El nombre de usuario ya ha sido utilizado por otro usuario.");
     }
 
     private void CheckEmailUnique(string email, string currentEmail)
     {
         if (email != currentEmail)
-            if (DbContext.Users.Any(u => u.Email == email))
+            if (DbContext.Users.Any(u => u.Email.ToLower() == email.ToLower()))
                 throw new Exception("El email ya ha sido utilizado por otro usuario.");
     }
 }
