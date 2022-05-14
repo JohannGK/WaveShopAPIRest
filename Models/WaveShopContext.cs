@@ -128,12 +128,6 @@ namespace WaveShopAPIRest.Models
                 entity.Property(e => e.Published).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasMaxLength(100);
-
-                entity.HasOne(d => d.IdCategoryNavigation)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.IdCategory)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_dbo.Product.Category");
             });
 
             modelBuilder.Entity<ProductSelectedCart>(entity =>
@@ -205,9 +199,9 @@ namespace WaveShopAPIRest.Models
 
                 entity.Property(e => e.Status).HasMaxLength(100);
 
-                entity.Property(e => e.UerType).HasMaxLength(500);
-
                 entity.Property(e => e.UserName).HasMaxLength(100);
+
+                entity.Property(e => e.UserType).HasMaxLength(500);
 
                 entity.HasMany(d => d.IdProducts)
                     .WithMany(p => p.IdUsers)
@@ -217,7 +211,7 @@ namespace WaveShopAPIRest.Models
                         r => r.HasOne<User>().WithMany().HasForeignKey("IdUser").HasConstraintName("FK_dbo.Favorite.User"),
                         j =>
                         {
-                            j.HasKey("IdUser", "IdProduct").HasName("PK__Favorite__E521B2554D701994");
+                            j.HasKey("IdUser", "IdProduct").HasName("PK__Favorite__E521B2559B2B7B28");
 
                             j.ToTable("Favorite");
                         });

@@ -24,14 +24,13 @@ namespace WaveShopAPIRest.Models
         public DateTime Published { get; set; }
         public string Country { get; set; } = null!;
         public string Location { get; set; } = null!;
-        public int IdCategory { get; set; }
+        public int? IdCategory { get; set; }
         public int IdVendor { get; set; }
         public int LikesNumber { get; set; }
         public int DislikesNumber { get; set; }
         public int ShoppedTimes { get; set; }
         public int CommentsNumber { get; set; }
 
-        public virtual Category IdCategoryNavigation { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<ProductSelectedCart> ProductSelectedCarts { get; set; }
         public virtual ICollection<ProductSelectedOrder> ProductSelectedOrders { get; set; }

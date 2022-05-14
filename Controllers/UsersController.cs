@@ -13,7 +13,7 @@ public class UsersController : ControllerBase
         DbContext = dbContext;
     }
 
-    [HttpGet()]
+    [HttpGet]
     public List<User> GetUsers()
     {
         return DbContext.Users.ToList();
@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
                     Status = "Offline",
                     BirthDay = user.BirthDay,
                     Age = user.Age,
-                    UerType = user.UerType,
+                    UserType = user.UserType,
                     Reputation = user.Reputation,
                     LastLogin = DateTime.Now,
                     LastUpdate = DateTime.Now
@@ -84,7 +84,7 @@ public class UsersController : ControllerBase
                     result.Status = newUser.Status;
                     result.BirthDay = newUser.BirthDay;
                     result.Age = newUser.Age;
-                    result.UerType = newUser.UerType;
+                    result.UserType = newUser.UserType;
                     result.Reputation = newUser.Reputation;
                     result.LastLogin = DateTime.Now;
                     result.LastUpdate = DateTime.Now;

@@ -12,7 +12,7 @@ CREATE TABLE [User] (
 	[Status] NVARCHAR (100) NOT NULL,
 	[BirthDay] DATETIME NOT NULL,
 	[Age] INT NOT NULL, --Auto generated
-	[UerType] NVARCHAR (500) NOT NULL,   --  Customer | Admin
+	[UserType] NVARCHAR (500) NOT NULL,   --  Customer | Admin
 	[Reputation] NVARCHAR (100) NOT NULL, -- Friendly | Neutral | Unfriendly
 	[LastLogin] DATETIME NOT NULL, -- Auto generated
 	[LastUpdate] DATETIME NOT NULL, -- Auto generated
@@ -59,14 +59,13 @@ CREATE TABLE [Product] (
     [Published] DATETIME NOT NULL,
 	[Country] NVARCHAR (100) NOT NULL,
 	[Location] NVARCHAR (500) NOT NULL,
-	[IdCategory] INT NOT NULL,
+	[IdCategory] INT,
 	[IdVendor] INT NOT NULL,
 	[LikesNumber] INT NOT NULL,
 	[DislikesNumber] INT NOT NULL,
 	[ShoppedTimes] INT NOT NULL,
 	[CommentsNumber] INT NOT NULL,
-	CONSTRAINT [PK_dbo.Product] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_dbo.Product.Category] FOREIGN KEY ([IdCategory]) REFERENCES [dbo].[Category] ([Id]) ON UPDATE CASCADE
+	CONSTRAINT [PK_dbo.Product] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 CREATE TABLE [Order] (
