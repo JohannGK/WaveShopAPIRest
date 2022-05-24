@@ -8,9 +8,9 @@ namespace WaveShopAPIRest.Models
         public Product()
         {
             Comments = new HashSet<Comment>();
+            Favorites = new HashSet<Favorite>();
             ProductSelectedCarts = new HashSet<ProductSelectedCart>();
             ProductSelectedOrders = new HashSet<ProductSelectedOrder>();
-            IdUsers = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -32,9 +32,8 @@ namespace WaveShopAPIRest.Models
         public int CommentsNumber { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<ProductSelectedCart> ProductSelectedCarts { get; set; }
         public virtual ICollection<ProductSelectedOrder> ProductSelectedOrders { get; set; }
-
-        public virtual ICollection<User> IdUsers { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace WaveShopAPIRest.Models
         public virtual DbSet<Address> Addresses { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
+        public virtual DbSet<Favorite> Favorites { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductSelectedCart> ProductSelectedCarts { get; set; } = null!;
@@ -91,6 +92,26 @@ namespace WaveShopAPIRest.Models
                     .HasForeignKey(d => d.IdProduct)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_dbo.Comment.Product");
+            });
+
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.HasKey(e => new { e.IdUser, e.IdProduct })
+                    .HasName("PK__Favorite__E521B2554860E435");
+
+                entity.ToTable("Favorite");
+
+                entity.Property(e => e.Creation).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdProductNavigation)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.IdProduct)
+                    .HasConstraintName("FK_dbo.Favorite.Product");
+
+                entity.HasOne(d => d.IdUserNavigation)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.IdUser)
+                    .HasConstraintName("FK_dbo.Favorite.User");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -202,19 +223,6 @@ namespace WaveShopAPIRest.Models
                 entity.Property(e => e.UserName).HasMaxLength(100);
 
                 entity.Property(e => e.UserType).HasMaxLength(500);
-
-                entity.HasMany(d => d.IdProducts)
-                    .WithMany(p => p.IdUsers)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "Favorite",
-                        l => l.HasOne<Product>().WithMany().HasForeignKey("IdProduct").HasConstraintName("FK_dbo.Favorite.Product"),
-                        r => r.HasOne<User>().WithMany().HasForeignKey("IdUser").HasConstraintName("FK_dbo.Favorite.User"),
-                        j =>
-                        {
-                            j.HasKey("IdUser", "IdProduct").HasName("PK__Favorite__E521B2559B2B7B28");
-
-                            j.ToTable("Favorite");
-                        });
             });
 
             OnModelCreatingPartial(modelBuilder);

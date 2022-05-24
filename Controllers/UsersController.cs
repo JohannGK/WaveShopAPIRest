@@ -14,19 +14,27 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public List<User> GetUsers()
+    public ActionResult GetUsers()
     {
-        return DbContext.Users.ToList();
+        List<User> users = new List<User>();
+        var list = DbContext.Users;
+        if (list != null)
+            users = list.ToList();
+        return new JsonResult(new { data = users });
     }
 
     [HttpGet("{userName}")]
-    public User? GetUser(string userName)
+    public ActionResult GetUser(string userName)
     {
-        return DbContext.Users.FirstOrDefault(u => u.UserName == userName);
+        var user = DbContext.Users.Where(u => u.UserName == userName);
+        if (user != null)
+            return new JsonResult(user.First());
+        else
+            return NotFound();
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUserAsync(User user)
+    public async Task<ActionResult> CreateUserAsync(User user)
     {
         using (var transaction = DbContext.Database.BeginTransaction())
         {
@@ -54,18 +62,18 @@ public class UsersController : ControllerBase
                 await DbContext.ShoppingCarts.AddAsync(new ShoppingCart() { productsQuantity = 0, subtotal = 0, LastUpdate = DateTime.Now, IdUser = newUser.Id });
                 await DbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
-                return newUser;
+                return new JsonResult(newUser);
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                return BadRequest(ex.Message);
+                return BadRequest(new JsonResult(new { error = ex.Message }));
             }
         }
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<User>> UpdateUserAsync(int id, User newUser)
+    public async Task<ActionResult> UpdateUserAsync(int id, User newUser)
     {
         if (DbContext.Users.Any(u => u.Id == id))
         {
@@ -90,12 +98,12 @@ public class UsersController : ControllerBase
                     result.LastUpdate = DateTime.Now;
                     await DbContext.SaveChangesAsync();
                     await transaction.CommitAsync();
-                    return result;
+                    return new JsonResult(result);
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    return BadRequest(ex.Message);
+                    return BadRequest(new JsonResult(new { error = ex.Message }));
                 }
             }
         }

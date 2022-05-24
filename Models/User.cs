@@ -8,8 +8,8 @@ namespace WaveShopAPIRest.Models
         public User()
         {
             Addresses = new HashSet<Address>();
+            Favorites = new HashSet<Favorite>();
             Orders = new HashSet<Order>();
-            IdProducts = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -27,8 +27,7 @@ namespace WaveShopAPIRest.Models
         public DateTime LastUpdate { get; set; }
 
         public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-
-        public virtual ICollection<Product> IdProducts { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WaveShopAPIRest.Models
 {
@@ -12,7 +13,9 @@ namespace WaveShopAPIRest.Models
         public int IdProduct { get; set; }
         public int IdShoppingCart { get; set; }
 
+        [JsonIgnore]
         public virtual Product IdProductNavigation { get; set; } = null!;
+        [JsonIgnore]
         public virtual ShoppingCart IdShoppingCartNavigation { get; set; } = null!;
     }
 }

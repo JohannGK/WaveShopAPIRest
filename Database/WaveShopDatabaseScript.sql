@@ -123,6 +123,7 @@ CREATE TABLE [Comment] (
 CREATE TABLE [Favorite] (
 	[IdUser] INT NOT NULL,
 	[IdProduct] INT NOT NULL,
+	[Creation] DATETIME NOT NULL,
     PRIMARY KEY(IdUser, IdProduct),
 	CONSTRAINT [FK_dbo.Favorite.User] FOREIGN KEY ([IdUser]) REFERENCES [dbo].[User] ([Id]) ON UPDATE CASCADE ON DELETE CASCADE,
 	CONSTRAINT [FK_dbo.Favorite.Product] FOREIGN KEY ([IdProduct]) REFERENCES [dbo].[Product] ([Id]) ON UPDATE CASCADE ON DELETE CASCADE
