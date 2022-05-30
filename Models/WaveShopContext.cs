@@ -24,6 +24,7 @@ namespace WaveShopAPIRest.Models
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductSelectedCart> ProductSelectedCarts { get; set; } = null!;
         public virtual DbSet<ProductSelectedOrder> ProductSelectedOrders { get; set; } = null!;
+        public virtual DbSet<Product_Image> Product_Images { get; set; } = null!;
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -32,7 +33,7 @@ namespace WaveShopAPIRest.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-E0N9BEAH\\SQLSERVERHP;Database=WaveShop;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=WaveShop;Trusted_Connection=True;");
             }
         }
 
@@ -97,7 +98,7 @@ namespace WaveShopAPIRest.Models
             modelBuilder.Entity<Favorite>(entity =>
             {
                 entity.HasKey(e => new { e.IdUser, e.IdProduct })
-                    .HasName("PK__Favorite__E521B25534E31ABE");
+                    .HasName("PK__Favorite__E521B255083E0AE1");
 
                 entity.ToTable("Favorite");
 
@@ -142,6 +143,8 @@ namespace WaveShopAPIRest.Models
 
                 entity.Property(e => e.Description).HasMaxLength(500);
 
+                entity.Property(e => e.LastUpdate).HasColumnType("datetime");
+
                 entity.Property(e => e.Location).HasMaxLength(500);
 
                 entity.Property(e => e.Name).HasMaxLength(500);
@@ -183,6 +186,18 @@ namespace WaveShopAPIRest.Models
                     .WithMany(p => p.ProductSelectedOrders)
                     .HasForeignKey(d => d.IdProduct)
                     .HasConstraintName("FK_dbo.ProductSelected.Product.Order");
+            });
+
+            modelBuilder.Entity<Product_Image>(entity =>
+            {
+                entity.ToTable("Product.Image");
+
+                entity.Property(e => e.LastUpdate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdProductNavigation)
+                    .WithMany(p => p.Product_Images)
+                    .HasForeignKey(d => d.IdProduct)
+                    .HasConstraintName("FK_dbo.Image.Product");
             });
 
             modelBuilder.Entity<ShoppingCart>(entity =>

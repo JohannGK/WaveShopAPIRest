@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\johan\\OneDrive\\Escritorio\\Proyectos\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {}
+    "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\johan\\OneDrive\\Escritorio\\Proyectos\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {
+    "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\johan\\OneDrive\\Escritorio\\Proyectos\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
+        "projectUniqueName": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
         "projectName": "WaveShopAPIRest",
-        "projectPath": "C:\\Users\\johan\\OneDrive\\Escritorio\\Proyectos\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
-        "packagesPath": "C:\\Users\\johan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\johan\\OneDrive\\Escritorio\\Proyectos\\WaveShopAPIRest\\obj\\",
+        "projectPath": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
+        "packagesPath": "C:\\Users\\josue\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\johan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\josue\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -79,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.105\\RuntimeIdentifierGraph.json"
         }
       }
     }

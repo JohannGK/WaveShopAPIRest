@@ -13,9 +13,9 @@ namespace WaveShopAPIRest.Models
         public int IdProduct { get; set; }
         public int IdShoppingCart { get; set; }
 
-         [JsonIgnore]
+        [JsonIgnore]
         public virtual Product IdProductNavigation { get; set; } = null!;
-         [JsonIgnore]
+        [JsonIgnore]
         public virtual ShoppingCart IdShoppingCartNavigation { get; set; } = null!;
     }
 }

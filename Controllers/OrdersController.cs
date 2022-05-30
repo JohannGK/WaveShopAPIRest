@@ -16,13 +16,18 @@ public class OrdersController : ControllerBase
     [HttpGet("{idUser}")]
     public ActionResult GetProductsShopped(int idUser)
     {
-        List<Order> orders = new List<Order>();
+        List<Product> orders = new List<Product>();
         foreach (var order in DbContext.Orders.Where(o => o.IdUser == idUser).ToList())
         {
-            DbContext.ProductSelectedOrders.Where(pso => pso.IdOrder == order.Id).ToList().ForEach(p => order.ProductSelectedOrders.Add(p));
-            orders.Add(order);
+            DbContext.ProductSelectedOrders.Where(pso => pso.IdOrder == order.Id).ToList().ForEach(p =>
+            {
+                var product = DbContext.Products.Find(p.IdProduct);
+                product.StockQuantity = p.Quantity;
+                product.UnitPrice = p.Price;
+                orders.Add(product);
+            });
         }
-        return new JsonResult(new { data = orders });
+        return new JsonResult(orders);
     }
 
     [HttpPost("buy/{idUser}")]

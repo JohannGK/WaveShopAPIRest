@@ -20,15 +20,27 @@ public class UsersController : ControllerBase
         var list = DbContext.Users;
         if (list != null)
             users = list.ToList();
-        return new JsonResult(new { data = users });
+        return new JsonResult(users);
     }
 
+    /*
     [HttpGet("{userName}")]
     public ActionResult GetUser(string userName)
     {
         var user = DbContext.Users.Where(u => u.UserName == userName);
         if (user != null)
             return new JsonResult(user.First());
+        else
+            return NotFound();
+    }
+    */
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult> GetUser(int id)
+    {
+        var user = await DbContext.Users.FindAsync(id);
+        if (user != null)
+            return new JsonResult(user);
         else
             return NotFound();
     }

@@ -12,12 +12,12 @@ namespace WaveShopAPIRest.Models
             Favorites = new HashSet<Favorite>();
             ProductSelectedCarts = new HashSet<ProductSelectedCart>();
             ProductSelectedOrders = new HashSet<ProductSelectedOrder>();
+            Product_Images = new HashSet<Product_Image>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public string? PhotoAddress { get; set; }
         public string? VideoAddress { get; set; }
         public int StockQuantity { get; set; }
         public double UnitPrice { get; set; }
@@ -31,12 +31,14 @@ namespace WaveShopAPIRest.Models
         public int DislikesNumber { get; set; }
         public int ShoppedTimes { get; set; }
         public int CommentsNumber { get; set; }
+        public DateTime LastUpdate { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
-
-         [JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<ProductSelectedCart> ProductSelectedCarts { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ProductSelectedOrder> ProductSelectedOrders { get; set; }
+        public virtual ICollection<Product_Image> Product_Images { get; set; }
     }
 }

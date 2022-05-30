@@ -24,13 +24,16 @@ public class ProductsController : ControllerBase
             if (category != -1)
                 value = products.ToList().Where(p => p.IdCategory == category).ToList();
         }
-        return new JsonResult(new { data = value });
+        value.ForEach(p => p.Product_Images = DbContext.Product_Images.Where(i => i.IdProduct == p.Id).ToArray());
+
+        return new JsonResult(value);
     }
 
     [HttpGet("{id}")]
     public ActionResult GetProduct(int id)
     {
         var product = DbContext.Products.Find(id);
+        product.Product_Images = DbContext.Product_Images.Where(i => i.IdProduct == product.Id).ToArray();
         if (product == null)
             return NotFound();
         else
@@ -51,7 +54,6 @@ public class ProductsController : ControllerBase
                 {
                     Name = product.Name,
                     Description = product.Description,
-                    PhotoAddress = product.PhotoAddress,
                     VideoAddress = product.VideoAddress,
                     StockQuantity = product.StockQuantity,
                     UnitPrice = product.UnitPrice,
@@ -64,8 +66,21 @@ public class ProductsController : ControllerBase
                     LikesNumber = 0,
                     DislikesNumber = 0,
                     ShoppedTimes = 0,
-                    CommentsNumber = 0
+                    CommentsNumber = 0,
+                    LastUpdate = DateTime.Now
                 });
+                await DbContext.SaveChangesAsync();
+
+                product.Product_Images.ToList().ForEach(i =>
+                {
+                    DbContext.Product_Images.AddAsync(new Product_Image()
+                    {
+                        Url = i.Url,
+                        LastUpdate = DateTime.Now,
+                        IdProduct = newProduct.Id
+                    });
+                });
+
                 await DbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
                 return new JsonResult(newProduct);
@@ -91,7 +106,6 @@ public class ProductsController : ControllerBase
                     CheckProductNameUnique(product.Name, result.Name);
                     result.Name = product.Name;
                     result.Description = product.Description;
-                    result.PhotoAddress = product.PhotoAddress;
                     result.VideoAddress = product.VideoAddress;
                     result.StockQuantity = product.StockQuantity;
                     result.UnitPrice = product.UnitPrice;
@@ -99,6 +113,22 @@ public class ProductsController : ControllerBase
                     result.Country = product.Country;
                     result.Location = product.Location;
                     result.IdCategory = product.IdCategory;
+                    result.LastUpdate = DateTime.Now;
+                    await DbContext.SaveChangesAsync();
+
+                    DbContext.Product_Images.RemoveRange(DbContext.Product_Images.Where(i => i.IdProduct == id));
+                    await DbContext.SaveChangesAsync();
+
+                    product.Product_Images.ToList().ForEach(i =>
+                    {
+                        DbContext.Product_Images.AddAsync(new Product_Image()
+                        {
+                            Url = i.Url,
+                            LastUpdate = DateTime.Now,
+                            IdProduct = id
+                        });
+                    });
+
                     await DbContext.SaveChangesAsync();
                     await transaction.CommitAsync();
                     return new JsonResult(result);
