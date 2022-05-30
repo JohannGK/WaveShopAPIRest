@@ -12,10 +12,9 @@ namespace WaveShopAPIRest.Models
         public string? Status { get; set; }
         public int IdProduct { get; set; }
         public int IdOrder { get; set; }
-
-        [JsonIgnore]
+         [JsonIgnore]
         public virtual Order IdOrderNavigation { get; set; } = null!;
-        [JsonIgnore]
+         [JsonIgnore]
         public virtual Product IdProductNavigation { get; set; } = null!;
     }
 }

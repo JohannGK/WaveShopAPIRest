@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WaveShopAPIRest.Models
 {
@@ -33,6 +34,8 @@ namespace WaveShopAPIRest.Models
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
+
+         [JsonIgnore]
         public virtual ICollection<ProductSelectedCart> ProductSelectedCarts { get; set; }
         public virtual ICollection<ProductSelectedOrder> ProductSelectedOrders { get; set; }
     }

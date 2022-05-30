@@ -32,7 +32,7 @@ namespace WaveShopAPIRest.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=WaveShop;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=LAPTOP-E0N9BEAH\\SQLSERVERHP;Database=WaveShop;Trusted_Connection=True;");
             }
         }
 
@@ -97,7 +97,7 @@ namespace WaveShopAPIRest.Models
             modelBuilder.Entity<Favorite>(entity =>
             {
                 entity.HasKey(e => new { e.IdUser, e.IdProduct })
-                    .HasName("PK__Favorite__E521B2554860E435");
+                    .HasName("PK__Favorite__E521B25534E31ABE");
 
                 entity.ToTable("Favorite");
 
