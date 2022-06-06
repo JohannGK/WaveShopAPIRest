@@ -51,7 +51,6 @@ CREATE TABLE [Product] (
 	[Id] INT IDENTITY (1, 1) NOT NULL,
     [Name] NVARCHAR (500) NOT NULL,
     [Description]  NVARCHAR (500) NOT NULL,
-    [PhotoAddress]  NVARCHAR (MAX),
 	[VideoAddress]  NVARCHAR (MAX),
 	[StockQuantity] INT NOT NULL,
 	[UnitPrice] FLOAT NOT NULL,
@@ -65,7 +64,18 @@ CREATE TABLE [Product] (
 	[DislikesNumber] INT NOT NULL,
 	[ShoppedTimes] INT NOT NULL,
 	[CommentsNumber] INT NOT NULL,
+	[LastUpdate] DATETIME NOT NULL,
+	[VendorUsername] NVARCHAR (500),
 	CONSTRAINT [PK_dbo.Product] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [Product.Image] (
+    [Id] INT IDENTITY (1, 1) NOT NULL,
+	[Url] NVARCHAR (MAX) NOT NULL,
+	[LastUpdate] DATETIME NOT NULL,
+	[IdProduct] INT,
+	CONSTRAINT [PK_dbo.Image] PRIMARY KEY CLUSTERED ([Id] ASC),
+	CONSTRAINT [FK_dbo.Image.Product] FOREIGN KEY ([IdProduct]) REFERENCES [dbo].[Product] ([Id]) ON UPDATE CASCADE
 );
 
 CREATE TABLE [Order] (

@@ -23,17 +23,15 @@ public class UsersController : ControllerBase
         return new JsonResult(users);
     }
 
-    /*
-    [HttpGet("{userName}")]
-    public ActionResult GetUser(string userName)
+    [HttpGet("mail/{email}")]
+    public ActionResult GetUser(string email)
     {
-        var user = DbContext.Users.Where(u => u.UserName == userName);
+        var user = DbContext.Users.FirstOrDefault(u => u.Email == email);
         if (user != null)
-            return new JsonResult(user.First());
+            return new JsonResult(user);
         else
             return NotFound();
     }
-    */
 
     [HttpGet("{id}")]
     public async Task<ActionResult> GetUser(int id)

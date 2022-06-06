@@ -67,7 +67,8 @@ public class ProductsController : ControllerBase
                     DislikesNumber = 0,
                     ShoppedTimes = 0,
                     CommentsNumber = 0,
-                    LastUpdate = DateTime.Now
+                    LastUpdate = DateTime.Now,
+                    VendorUsername = DbContext.Users.Find(product.IdVendor).UserName
                 });
                 await DbContext.SaveChangesAsync();
 

@@ -30,6 +30,64 @@ public class OrdersController : ControllerBase
         return new JsonResult(orders);
     }
 
+    [HttpGet("sold/{idUser}")]
+    public ActionResult GetProductsSold(int idUser)
+    {
+        List<Product> products = new List<Product>();
+        DbContext.Products.Where(p => p.IdVendor == idUser).ToList().ForEach(product =>
+        {
+            product.Product_Images = DbContext.Product_Images.Where(i => i.IdProduct == product.Id).ToArray();
+            products.Add(product);
+        });
+        return new JsonResult(products);
+    }
+
+    [HttpGet("sold/details/{idProduct}")]
+    public async Task<ActionResult> GetProductSoldById(int idProduct)
+    {
+        List<Product> orders = new List<Product>();
+        foreach (var pso in DbContext.ProductSelectedOrders.Where(ps => ps.IdProduct == idProduct).ToList())
+        {
+            var order = await DbContext.Orders.FindAsync(pso.IdOrder);
+            var product = DbContext.Products.Find(idProduct);
+            var clone = CloneProduct(product);
+            clone.IdVendor = order.IdUser;
+            clone.VendorUsername = DbContext.Users.Find(order.IdUser).UserName;
+            clone.UnitPrice = pso.Price;
+            clone.StockQuantity = pso.Quantity;
+            clone.LastUpdate = order.Ordered;
+            orders.Add(clone);
+        }
+        return new JsonResult(orders);
+    }
+
+
+    private Product CloneProduct(Product product)
+    {
+        var p = new Product()
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            VideoAddress = product.VideoAddress,
+            StockQuantity = product.StockQuantity,
+            UnitPrice = product.UnitPrice,
+            Status = product.Status,
+            Published = product.Published,
+            Country = product.Country,
+            Location = product.Location,
+            IdCategory = product.IdCategory,
+            IdVendor = product.IdVendor,
+            LikesNumber = product.LikesNumber,
+            DislikesNumber = product.DislikesNumber,
+            ShoppedTimes = product.ShoppedTimes,
+            CommentsNumber = product.CommentsNumber,
+            LastUpdate = product.LastUpdate,
+            VendorUsername = product.VendorUsername
+        };
+        return p;
+    }
+
     [HttpPost("buy/{idUser}")]
     public async Task<ActionResult> PurchaseProduct(int idUser, Product product)
     {
@@ -41,9 +99,15 @@ public class OrdersController : ControllerBase
                 ProductSelectedOrder productSelected;
                 var p = await DbContext.Products.FindAsync(product.Id);
                 if (p.StockQuantity < product.StockQuantity)
+                {
                     throw new Exception("La cantidad del producto no es suficiente");
+                }
                 else
+                {
                     p.StockQuantity -= product.StockQuantity;
+                    p.ShoppedTimes += product.StockQuantity;
+                    p.LastUpdate = DateTime.Now;
+                }
                 await DbContext.SaveChangesAsync();
                 await DbContext.ProductSelectedOrders.AddAsync(productSelected = new ProductSelectedOrder()
                 {
@@ -83,6 +147,8 @@ public class OrdersController : ControllerBase
                     if (p.Quantity > product.StockQuantity)
                         throw new Exception($"El producto '{product.Name}' no tiene la cantidad suficiente en el stock");
                     product.StockQuantity -= p.Quantity;
+                    product.ShoppedTimes += p.Quantity;
+                    product.LastUpdate = DateTime.Now;
                     order.Total += p.Price;
                     await SaveProductBought(p, order.Id);
                 }

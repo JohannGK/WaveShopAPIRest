@@ -98,7 +98,7 @@ namespace WaveShopAPIRest.Models
             modelBuilder.Entity<Favorite>(entity =>
             {
                 entity.HasKey(e => new { e.IdUser, e.IdProduct })
-                    .HasName("PK__Favorite__E521B255083E0AE1");
+                    .HasName("PK__Favorite__E521B255AEA66E1B");
 
                 entity.ToTable("Favorite");
 
@@ -152,6 +152,8 @@ namespace WaveShopAPIRest.Models
                 entity.Property(e => e.Published).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasMaxLength(100);
+
+                entity.Property(e => e.VendorUsername).HasMaxLength(500);
             });
 
             modelBuilder.Entity<ProductSelectedCart>(entity =>

@@ -120,3 +120,4 @@ C:\Users\johan\OneDrive\Escritorio\Proyectos\WaveShopAPIRest\obj\Debug\net6.0\Wa
 C:\Users\johan\OneDrive\Escritorio\Proyectos\WaveShopAPIRest\obj\Debug\net6.0\refint\WaveShopAPIRest.dll
 C:\Users\johan\OneDrive\Escritorio\Proyectos\WaveShopAPIRest\obj\Debug\net6.0\WaveShopAPIRest.genruntimeconfig.cache
 C:\Users\johan\OneDrive\Escritorio\Proyectos\WaveShopAPIRest\obj\Debug\net6.0\ref\WaveShopAPIRest.dll
+C:\Users\josue\OneDrive\Documentos\GitHub\WaveShopAPIRest\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
