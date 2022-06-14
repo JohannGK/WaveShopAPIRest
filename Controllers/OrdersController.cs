@@ -27,6 +27,7 @@ public class OrdersController : ControllerBase
                 orders.Add(product);
             });
         }
+        orders.ForEach(p => p.Product_Images = DbContext.Product_Images.Where(i => i.IdProduct == p.Id).ToArray());
         return new JsonResult(orders);
     }
 

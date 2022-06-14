@@ -18,25 +18,25 @@ public class CommentsController : ControllerBase
     [HttpGet("{IdProduct}")]
     public ActionResult GetComments(int idProduct)
     {
-    List<Comment> value = new List<Comment>();
-    var comments = DbContext.Comments.Where(c => c.IdProduct == idProduct);
-    if (comments != null)
-    {
-        value = comments.ToList().Where(p => p.IdProduct == idProduct).ToList();
-    }
-    return new JsonResult(value);
+        List<Comment> value = new List<Comment>();
+        var comments = DbContext.Comments.Where(c => c.IdProduct == idProduct);
+        if (comments != null)
+        {
+            value = comments.ToList().Where(p => p.IdProduct == idProduct).ToList();
+        }
+        return new JsonResult(value);
     }
 
-     [HttpGet("comment/{IdComment}")]
+    [HttpGet("comment/{IdComment}")]
     public ActionResult GetReplyComments(int idComment)
     {
-    List<Comment> value = new List<Comment>();
-    var comments = DbContext.Comments.Where(c => c.IdComment == idComment);
-    if (comments != null)
-    {
-        value = comments.ToList().Where(p => p.IdComment == idComment).ToList();
-    }
-    return new JsonResult(value);
+        List<Comment> value = new List<Comment>();
+        var comments = DbContext.Comments.Where(c => c.IdComment == idComment);
+        if (comments != null)
+        {
+            value = comments.ToList().Where(p => p.IdComment == idComment).ToList();
+        }
+        return new JsonResult(value);
     }
 
     [HttpPost]
