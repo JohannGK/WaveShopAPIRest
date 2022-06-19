@@ -21,7 +21,7 @@ public class ProductsController : ControllerBase
         if (products != null)
         {
             value = products.ToList();
-            if (category != -1)
+            if (category != 0)
                 value = products.ToList().Where(p => p.IdCategory == category).ToList();
         }
         value.ForEach(p => p.Product_Images = DbContext.Product_Images.Where(i => i.IdProduct == p.Id).ToArray());
@@ -144,32 +144,6 @@ public class ProductsController : ControllerBase
         else
         {
             return NotFound();
-        }
-    }
-
-    [HttpPost("{idUser}/{idProduct}")]
-    public async Task<ActionResult> AddFavoriteProductAsync(int idUser, int idProduct)
-    {
-        using (var transaction = DbContext.Database.BeginTransaction())
-        {
-            try
-            {
-                Favorite? result;
-                await DbContext.Favorites.AddAsync(result = new Favorite()
-                {
-                    IdProduct = idProduct,
-                    IdUser = idUser,
-                    Creation = DateTime.Now
-                });
-                await DbContext.SaveChangesAsync();
-                await transaction.CommitAsync();
-                return new JsonResult(result);
-            }
-            catch (Exception ex)
-            {
-                await transaction.RollbackAsync();
-                return BadRequest(new JsonResult(new { error = ex.Message }));
-            }
         }
     }
 

@@ -19,6 +19,12 @@ public class CategoriesController : ControllerBase
         return DbContext.Categories.ToList();
     }
 
+    [HttpGet("detail/{id}")]
+    public async Task<Category> GetCategoryByIdAsync(int id)
+    {
+        return await DbContext.Categories.FindAsync(id);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Category>> CreateCategoryAsync(Category category)
     {
@@ -47,7 +53,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Category>> UpdateUserAsync(int id, Category category)
+    public async Task<ActionResult<Category>> UpdateCategoryAsync(int id, Category category)
     {
         if (DbContext.Categories.Any(c => c.Id == id))
         {

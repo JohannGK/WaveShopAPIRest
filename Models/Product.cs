@@ -35,6 +35,7 @@ namespace WaveShopAPIRest.Models
         public string? VendorUsername { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Favorite> Favorites { get; set; }
         [JsonIgnore]
         public virtual ICollection<ProductSelectedCart> ProductSelectedCarts { get; set; }
