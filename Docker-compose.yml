@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    image: sqlserver
+    ports:
+      - 2433:1433
+    expose:
+      - 1433
+    volumes:
+        - mssql-shop:/var/opt/mssql/
+  waveshopapi:
+    image: waveshopapi
+    ports:
+      - 8080:80
+    expose:
+      - 80
+    depends_on:
+      - sqlserver
+  
+
+volumes:
+  mssql-shop:

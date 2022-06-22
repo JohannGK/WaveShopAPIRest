@@ -27,8 +27,8 @@ public class ShoppingCartController : ControllerBase
             if (product != null)
             {
                 product.StockQuantity = p.Quantity;
-                product.UnitPrice *= p.Quantity;
-                value.Add(product);
+                product.UnitPrice = p.Price;
+                value.Add(CloneProduct(product));
             }
         }
         value.ForEach(p => p.Product_Images = DbContext.Product_Images.Where(i => i.IdProduct == p.Id).ToArray());
@@ -84,6 +84,32 @@ public class ShoppingCartController : ControllerBase
                 return BadRequest(new JsonResult(new { error = ex.Message }));
             }
         }
+    }
+
+    private Product CloneProduct(Product product)
+    {
+        var p = new Product()
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            VideoAddress = product.VideoAddress,
+            StockQuantity = product.StockQuantity,
+            UnitPrice = product.UnitPrice,
+            Status = product.Status,
+            Published = product.Published,
+            Country = product.Country,
+            Location = product.Location,
+            IdCategory = product.IdCategory,
+            IdVendor = product.IdVendor,
+            LikesNumber = product.LikesNumber,
+            DislikesNumber = product.DislikesNumber,
+            ShoppedTimes = product.ShoppedTimes,
+            CommentsNumber = product.CommentsNumber,
+            LastUpdate = product.LastUpdate,
+            VendorUsername = product.VendorUsername
+        };
+        return p;
     }
 
     private async Task<ActionResult<bool>> CheckProductQuantity(int idProduct, int cantidad)
