@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {}
+    "C:\\Users\\Josué Alarcón\\Desktop\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {
+    "C:\\Users\\Josué Alarcón\\Desktop\\WaveShopAPIRest\\WaveShopAPIRest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
+        "projectUniqueName": "C:\\Users\\Josué Alarcón\\Desktop\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
         "projectName": "WaveShopAPIRest",
-        "projectPath": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
-        "packagesPath": "C:\\Users\\josue\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\josue\\OneDrive\\Documentos\\GitHub\\WaveShopAPIRest\\obj\\",
+        "projectPath": "C:\\Users\\Josué Alarcón\\Desktop\\WaveShopAPIRest\\WaveShopAPIRest.csproj",
+        "packagesPath": "C:\\Users\\Josué Alarcón\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Josué Alarcón\\Desktop\\WaveShopAPIRest\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\josue\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Josué Alarcón\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
